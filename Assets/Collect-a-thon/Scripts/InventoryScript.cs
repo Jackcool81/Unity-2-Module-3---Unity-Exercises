@@ -11,7 +11,7 @@ public class InventoryScript : MonoBehaviour
 
     bool inventoryShowing = false;
 
-    // ADD CODE HERE
+    public List<InvItem> inventory; 
 
     // END OF CODE
 
@@ -50,15 +50,23 @@ public class InventoryScript : MonoBehaviour
     public void UpdateInventory()
     {
         DeleteOldItems();
-        // ADD CODE HERE
+        foreach (InvItem item in inventory) {
+            GameObject invText = Instantiate(textPrefab);
+            invText.transform.SetParent(content.transform);
+            invText.GetComponent<TextMeshProUGUI>().SetText(item.invName);
+
+        }
 
         // END OF CODE
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        // ADD CODE HERE
-
-        // END OF CODE
+        
+        if (other.GetComponent<InvItem>() != null) 
+        {
+            inventory.Add(other.GetComponent<InvItem>());
+            other.gameObject.SetActive(false);
+        }
     }
 }

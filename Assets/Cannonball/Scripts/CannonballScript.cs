@@ -12,16 +12,14 @@ public class CannonballScript : MonoBehaviour
 
     private void Awake() 
     {
-        // ADD CODE HERE
-        
-        // END OF CODE    
+        rb = this.GetComponent<Rigidbody>(); 
     }
 
     public void Launch(CannonControlScript cannon, float power, float angle)
     {
         this.cannon = cannon;
 
-        // ADD CODE HERE
+        rb.AddRelativeForce(transform.up * power, ForceMode.Impulse);
 
         // END OF CODE
     }
@@ -29,9 +27,9 @@ public class CannonballScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ADD CODE HERE
-        
-        // END OF CODE
+        float x = Input.GetAxis("Horizontal") * airSpeed;
+        float z = Input.GetAxis("Vertical") * airSpeed;
+        rb.AddForce(new Vector3(x, 0, z));
     }
 
     private void OnCollisionEnter(Collision other) 
@@ -48,7 +46,7 @@ public class CannonballScript : MonoBehaviour
         {
             DestructableBuilding block = rayhit.collider.GetComponent<DestructableBuilding>();
             // ADD CODE HERE
-        
+            //block.GetRigidbody().AddExplosionForce(explosionPower, block.transform.position, explosionRadius, 3.0F);
             // END OF CODE
         }
     }
